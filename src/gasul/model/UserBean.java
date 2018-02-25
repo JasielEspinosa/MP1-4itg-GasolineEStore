@@ -1,7 +1,5 @@
 package gasul.model;
 
-import java.sql.*;
-
 public class UserBean {
 
 	private String firstName;

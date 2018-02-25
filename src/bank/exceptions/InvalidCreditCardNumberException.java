@@ -3,7 +3,7 @@ package bank.exceptions;
 public interface InvalidCreditCardNumberException {
 
 	String VALID_CARD = "Your credit card submitted is VALID.";
-	String INVALID_CARD = "Credit Card Unauthorized! Credit card submitted is INVALID.";
+	String INVALID_CARD = "Credit Card Unauthorized! Your input of card number is INVALID.";
 
 	String NON_DIGIT_INPUT = "   Input invalid. Please enter digits only. ";
 

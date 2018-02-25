@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bank.exceptions.OtherMessages;
 import bank.luhn.ProcessLuhn;
 import gasul.model.UserBean;
 
 @WebServlet("")
-public class ProcessServlet extends HttpServlet {
+public class ProcessServlet extends HttpServlet implements OtherMessages {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Connection connection;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -53,7 +54,8 @@ public class ProcessServlet extends HttpServlet {
 
 		DecimalFormat decipogi = new DecimalFormat("#,###,###.00");
 
-		UserBean userDatas = new UserBean(/*((Connection) getServletContext().getAttribute("dbconn")), */firstName, lastName, gasul, liters, gasLiterPrice, purchaseAmount, vat, totalAmount, paymentType);
+		UserBean userDatas = new UserBean(/*((Connection) getServletContext().getAttribute("dbconn")), */firstName, lastName, gasul, liters,
+				gasLiterPrice, purchaseAmount, vat, totalAmount, paymentType);
 		UserBean cardNumberData = ProcessLuhn.getInstance(cardNumber);
 
 		userDatas.setFirstName(firstName);
@@ -61,14 +63,16 @@ public class ProcessServlet extends HttpServlet {
 		userDatas.setLiters(liters);
 
 		if (gasul.equals("Unleaded")) {
-			userDatas.setGasLiterPrice(54.00);
+			gasLiterPrice = 54.00;
 		} else if (gasul.equals("Diesel")) {
-			userDatas.setGasLiterPrice(41.00);
+			gasLiterPrice = 41.00;
 		} else if (gasul.equals("Premium")) {
-			userDatas.setGasLiterPrice(58.00);
+			gasLiterPrice = 58.00;
 		} else {
-			userDatas.setGasLiterPrice(54.00);
+			gasLiterPrice = 54.00;
 		}
+
+		userDatas.setGasLiterPrice(gasLiterPrice);
 
 		gasLiterPrice = userDatas.getGasLiterPrice();
 		String gasLiterPriceTrim = decipogi.format(gasLiterPrice);
@@ -85,28 +89,54 @@ public class ProcessServlet extends HttpServlet {
 		userDatas.setTotalAmount(totalAmount);
 		String totalAmountTrim = decipogi.format(totalAmount);
 
-		//int totalAmountInt = (int) totalAmount;
+		//Convert to Tagalog
 
-		//get cents
-		int piso = (int) Math.floor(totalAmount);
-		double cents = totalAmount - piso;
-		int sentimo = (int) (100 * cents);
+		int pisoGLP = (int) Math.floor(gasLiterPrice);
+		double centsGLP = gasLiterPrice - pisoGLP;
+		int sentimoGLP = (int) (100 * centsGLP + 0.5);
 
-		String pisoTagalog = tagalog(piso, false);
-		String sentimoTagalog = tagalog(sentimo, false);
+		String pisoTagalogGLP = tagalog(pisoGLP, false);
+		String sentimoTagalogGLP = tagalog(sentimoGLP, false);
+		String tagalogOutputGLP = pisoTagalogGLP + ENDPISO + sentimoTagalogGLP + ENDSENTIMO;
+		String tagalogOutputTrimGLP = tagalogOutputGLP.substring(0, 1).toUpperCase() + tagalogOutputGLP.substring(1);
+		request.setAttribute("tagalogGLP", tagalogOutputTrimGLP);
 
-		//System.out.println("dollars: " + piso);
-		//System.out.println("cents: " + cents);
-		//System.out.println("centsAsInt: " + sentimo);
-		//System.out.println(pisoTagalog + "ng piso at " + sentimoTagalog + "ng sentimo");
+		int pisoPA = (int) Math.floor(purchaseAmount);
+		double centsPA = purchaseAmount - pisoPA;
+		int sentimoPA = (int) (100 * centsPA + 0.5);
+		String pisoTagalogPA = tagalog(pisoPA, false);
+		String sentimoTagalogPA = tagalog(sentimoPA, false);
+		String tagalogOutputPA = pisoTagalogPA + ENDPISO + sentimoTagalogPA + ENDSENTIMO;
+		String tagalogOutputTrimPA = tagalogOutputPA.substring(0, 1).toUpperCase() + tagalogOutputPA.substring(1);
+		request.setAttribute("tagalogPA", tagalogOutputTrimPA);
 
-		String tagalogOutput = pisoTagalog + "ng piso at " + sentimoTagalog + "ng sentimo";
-		String tagalogOutputTrim = tagalogOutput.substring(0, 1).toUpperCase() + tagalogOutput.substring(1);
+		int pisoVAT = (int) Math.floor(vat);
+		double centsVAT = vat - pisoVAT;
+		int sentimoVAT = (int) (100 * centsVAT + 0.5);
+		String pisoTagalogVAT = tagalog(pisoVAT, false);
+		String sentimoTagalogVAT = tagalog(sentimoVAT, false);
+		String tagalogOutputVAT = pisoTagalogVAT + ENDPISO + sentimoTagalogVAT + ENDSENTIMO;
+		String tagalogOutputTrimVAT = tagalogOutputVAT.substring(0, 1).toUpperCase() + tagalogOutputVAT.substring(1);
+		request.setAttribute("tagalogVAT", tagalogOutputTrimVAT);
+
+		int pisoTA = (int) Math.floor(totalAmount);
+		double centsTA = totalAmount - pisoTA;
+		int sentimoTA = (int) (100 * centsTA + 0.5);
+
+		System.out.println(pisoTA);
+		System.out.println(centsTA);
+		System.out.println(sentimoTA);
+
+		String pisoTagalogTA = tagalog(pisoTA, false);
+		String sentimoTagalogTA = tagalog(sentimoTA, false);
+		String tagalogOutputTA = pisoTagalogTA + ENDPISO + sentimoTagalogTA + ENDSENTIMO;
+		String tagalogOutputTrimTA = tagalogOutputTA.substring(0, 1).toUpperCase() + tagalogOutputTA.substring(1);
+		request.setAttribute("tagalogTA", tagalogOutputTrimTA);
 
 		userDatas.setPaymentType(paymentType);
-		
+
 		connection = (Connection) getServletContext().getAttribute("dbconn");
-		
+
 		String sql = "INSERT INTO CustomerTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
@@ -133,7 +163,6 @@ public class ProcessServlet extends HttpServlet {
 		request.setAttribute("purchaseAmountTrim", purchaseAmountTrim);
 		request.setAttribute("vatTrim", vatTrim);
 		request.setAttribute("totalAmountTrim", totalAmountTrim);
-		request.setAttribute("tagalog", tagalogOutputTrim);
 
 		getServletContext().log("Deploying results");
 		//getServletContext().getRequestDispatcher("output.jsp").forward(request, response);
