@@ -57,12 +57,12 @@
                <div>
                   <p>
                      <b>Nagbubuo ito ng ${tagalogGLP}ng price per liter, <br /> ${tagalogPA} na purchased amount, <br /> ${tagalogVAT}
-                        na value-added tax, at ang kabuuan ng <br /> ${tagalogTA}.
+                        na value-added tax, <br />At ang kabuuan ng ${tagalogTA} :)
                      </b>
                   <p>
                </div>
                <div>
-                  <b>Na ginamit ang ${gasul.paymentType}Card</b>
+                  <b>Na ginamit ang ${gasul.paymentType} Card</b>
                </div>
                <div>
                   <b>${cardmo.cardNumber}</b>
@@ -79,7 +79,7 @@
       <!-- End of Form Container -->
    </div>
    <!-- End of Main Container -->
-<!--    <div id="loading"></div> -->
+   <!--    <div id="loading"></div> -->
    <!-- Optional JavaScript - Offline Link  -->
    <script src="js/jquery-3.2.1.slim.min.js"></script>
    <script src="js/popper.min.js"></script>

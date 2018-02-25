@@ -9,10 +9,10 @@ CREATE TABLE CustomerTable (
 	Gasul varchar(300),
 	Liters double,
 	GasLiterPrice double,
-	PurchaseAmount double,
-	Vat double,
-	TotalAmount double,
+	PurchaseAmount varchar(500),
+	Vat varchar(500),
+	TotalAmount varchar(500),
 	PaymentType varchar(300),
-	CardNumber blob,
+	CardNumber varchar(500),
 	PRIMARY KEY (CustomerID)
 );

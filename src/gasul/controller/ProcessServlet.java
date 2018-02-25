@@ -17,6 +17,8 @@ import bank.exceptions.OtherMessages;
 import bank.luhn.ProcessLuhn;
 import gasul.model.UserBean;
 
+import gasul.dbconnect.Security;
+
 @WebServlet("")
 public class ProcessServlet extends HttpServlet implements OtherMessages {
 	private static final long serialVersionUID = 1L;
@@ -99,7 +101,6 @@ public class ProcessServlet extends HttpServlet implements OtherMessages {
 		String sentimoTagalogGLP = tagalog(sentimoGLP, false);
 		String tagalogOutputGLP = pisoTagalogGLP + ENDPISO + sentimoTagalogGLP + ENDSENTIMO;
 		String tagalogOutputTrimGLP = tagalogOutputGLP.substring(0, 1).toUpperCase() + tagalogOutputGLP.substring(1);
-		request.setAttribute("tagalogGLP", tagalogOutputTrimGLP);
 
 		int pisoPA = (int) Math.floor(purchaseAmount);
 		double centsPA = purchaseAmount - pisoPA;
@@ -108,7 +109,6 @@ public class ProcessServlet extends HttpServlet implements OtherMessages {
 		String sentimoTagalogPA = tagalog(sentimoPA, false);
 		String tagalogOutputPA = pisoTagalogPA + ENDPISO + sentimoTagalogPA + ENDSENTIMO;
 		String tagalogOutputTrimPA = tagalogOutputPA.substring(0, 1).toUpperCase() + tagalogOutputPA.substring(1);
-		request.setAttribute("tagalogPA", tagalogOutputTrimPA);
 
 		int pisoVAT = (int) Math.floor(vat);
 		double centsVAT = vat - pisoVAT;
@@ -117,21 +117,15 @@ public class ProcessServlet extends HttpServlet implements OtherMessages {
 		String sentimoTagalogVAT = tagalog(sentimoVAT, false);
 		String tagalogOutputVAT = pisoTagalogVAT + ENDPISO + sentimoTagalogVAT + ENDSENTIMO;
 		String tagalogOutputTrimVAT = tagalogOutputVAT.substring(0, 1).toUpperCase() + tagalogOutputVAT.substring(1);
-		request.setAttribute("tagalogVAT", tagalogOutputTrimVAT);
 
 		int pisoTA = (int) Math.floor(totalAmount);
 		double centsTA = totalAmount - pisoTA;
 		int sentimoTA = (int) (100 * centsTA + 0.5);
 
-		System.out.println(pisoTA);
-		System.out.println(centsTA);
-		System.out.println(sentimoTA);
-
 		String pisoTagalogTA = tagalog(pisoTA, false);
 		String sentimoTagalogTA = tagalog(sentimoTA, false);
 		String tagalogOutputTA = pisoTagalogTA + ENDPISO + sentimoTagalogTA + ENDSENTIMO;
 		String tagalogOutputTrimTA = tagalogOutputTA.substring(0, 1).toUpperCase() + tagalogOutputTA.substring(1);
-		request.setAttribute("tagalogTA", tagalogOutputTrimTA);
 
 		userDatas.setPaymentType(paymentType);
 
@@ -140,16 +134,16 @@ public class ProcessServlet extends HttpServlet implements OtherMessages {
 		String sql = "INSERT INTO CustomerTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement pst = connection.prepareStatement(sql);
-			pst.setString(1, userDatas.getFirstName());
-			pst.setString(2, userDatas.getLastName());
+			pst.setString(1, Security.encrypt(userDatas.getFirstName()));
+			pst.setString(2, Security.encrypt(userDatas.getLastName()));
 			pst.setString(3, userDatas.getGasul());
 			pst.setDouble(4, userDatas.getLiters());
 			pst.setDouble(5, userDatas.getGasLiterPrice());
-			pst.setDouble(6, userDatas.getPurchaseAmount());
-			pst.setDouble(7, userDatas.getVat());
-			pst.setDouble(8, userDatas.getTotalAmount());
+			pst.setString(6, Security.encrypt(Double.toString(userDatas.getPurchaseAmount())));
+			pst.setString(7, Security.encrypt(Double.toString(userDatas.getVat())));
+			pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
 			pst.setString(9, userDatas.getPaymentType());
-			pst.setString(10, cardNumberData.getCardNumber());
+			pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
 			pst.executeUpdate();
 		} catch (SQLException sqle) {
 			System.err.println("Database connect result: " + sqle.getMessage());
@@ -157,12 +151,17 @@ public class ProcessServlet extends HttpServlet implements OtherMessages {
 			System.err.println("Database connect result: " + exp.getMessage());
 		}
 
-		request.setAttribute("gasul", userDatas);
-		request.setAttribute("cardmo", cardNumberData);
-		request.setAttribute("gasLiterPriceTrim", gasLiterPriceTrim);
-		request.setAttribute("purchaseAmountTrim", purchaseAmountTrim);
-		request.setAttribute("vatTrim", vatTrim);
-		request.setAttribute("totalAmountTrim", totalAmountTrim);
+		getServletContext().setAttribute("gasul", userDatas);
+		getServletContext().setAttribute("cardmo", cardNumberData);
+		getServletContext().setAttribute("gasLiterPriceTrim", gasLiterPriceTrim);
+		getServletContext().setAttribute("purchaseAmountTrim", purchaseAmountTrim);
+		getServletContext().setAttribute("vatTrim", vatTrim);
+		getServletContext().setAttribute("totalAmountTrim", totalAmountTrim);
+
+		getServletContext().setAttribute("tagalogGLP", tagalogOutputTrimGLP);
+		getServletContext().setAttribute("tagalogPA", tagalogOutputTrimPA);
+		getServletContext().setAttribute("tagalogVAT", tagalogOutputTrimVAT);
+		getServletContext().setAttribute("tagalogTA", tagalogOutputTrimTA);
 
 		getServletContext().log("Deploying results");
 		//getServletContext().getRequestDispatcher("output.jsp").forward(request, response);

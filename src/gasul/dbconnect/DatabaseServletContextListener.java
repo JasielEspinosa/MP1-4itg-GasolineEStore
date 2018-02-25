@@ -18,12 +18,15 @@ public class DatabaseServletContextListener implements ServletContextListener {
 		try {
 			Class.forName(context.getInitParameter("jdbcDriver"));
 
-			Connection connection = DriverManager.getConnection(context.getInitParameter("jdbcURL"), context.getInitParameter("dbUserName"),
-					context.getInitParameter("dbPassword"));
+/*			Connection connection = DriverManager.getConnection(context.getInitParameter("jdbcURL"), context.getInitParameter("dbUserName"),
+					context.getInitParameter("dbPassword"));*/
+
+			Connection connection = DriverManager.getConnection(Security.decrypt(context.getInitParameter("jdbcURL")),
+					Security.decrypt(context.getInitParameter("dbUserName")), Security.decrypt(context.getInitParameter("dbPassword")));
 
 			if (connection != null) {
 				System.out.println("Connection object is initialized.");
-				
+
 				sce.getServletContext().setAttribute("dbconn", connection);
 				System.out.println("Database Connected");
 			} else {

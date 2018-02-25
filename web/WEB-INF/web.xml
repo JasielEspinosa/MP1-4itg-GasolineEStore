@@ -5,7 +5,11 @@
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
 	<context-param>
@@ -15,17 +19,17 @@
 
 	<context-param>
 		<param-name>jdbcURL</param-name>
-		<param-value>jdbc:mysql://localhost:3306/itelec4c_4itg_mp1_eegasuldb</param-value>
+		<param-value>ZObe4rdvMhFMUtf3CC/+QxhqHCQY7m7gkwva1dgmkyfGMI9YWBFSAc/GuHKVAxVIHgD3hV9fKOVmM9NcaX0wlA==</param-value>
 	</context-param>
 
 	<context-param>
 		<param-name>dbUserName</param-name>
-		<param-value>root</param-value>
+		<param-value>NyiG//i7loPFfdUoO9BFuA==</param-value>
 	</context-param>
 
 	<context-param>
 		<param-name>dbPassword</param-name>
-		<param-value></param-value>
+		<param-value>719bTBvphWewRiCiCj3D/A==</param-value>
 	</context-param>
 
 	<servlet>
@@ -36,5 +40,22 @@
 		<servlet-name>ProcessServlet</servlet-name>
 		<url-pattern>/gasulgaming.proc</url-pattern>
 	</servlet-mapping>
+
+	<listener>
+		<listener-class>gasul.dbconnect.DatabaseUserServletContextAttributeListener</listener-class>
+	</listener>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.NullPointerException</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+
 
 </web-app>
