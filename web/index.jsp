@@ -1,5 +1,5 @@
-<!DOCTYPE html">
-<html>
+<!doctype html>
+<html lang="en">
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -12,7 +12,7 @@
 <!-- Bootstrap CSS - CDN Link 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     -->
-<title>Gasoline eStore Purchase Page - Eslabon Espinosa</title>
+<title>MP1 - Gasoline eStore</title>
 </head>
 <body>
    <!-- Main Container -->
@@ -26,7 +26,7 @@
          <div class="col-sm-3 header__title">
             <h1>Gasoline eStore</h1>
          </div>
-         <div class="col-sm-4 header__thirdcolumn"></div>
+         <div class="col-sm-2"></div>
       </div>
       <!-- End of Header-->
       <!-- Form Container-->
@@ -44,7 +44,7 @@
                         placeholder="Customer Last Name">
                   </div>
                   <div class="form-content__dropdown">
-                     <label>Enter Gasoline Type</label> <select name="gasolineType" required="required">
+                     <label>Enter Gasoline Type </label> <select name="gasolineType" required="required">
                         <!--  <option selected="selected" disabled="disabled">Select Gasul Type</option> -->
                         <option value="Unleaded">Unleaded</option>
                         <option value="Diesel">Diesel</option>
@@ -52,7 +52,7 @@
                      </select>
                   </div>
                   <div>
-                     <input class="col-md-12 form-content__input-field" type="number" name="liters" id="liters" min="1" step=".001"
+                     <input class="col-md-12 form-content__input-field" type="number" name="liters" id="liters" step=".001" min="1"
                         required="required" placeholder="Enter Number Of Liters">
                   </div>
                   <div class="form-content__radiogroup">
@@ -85,8 +85,12 @@
                   </div>
                   <!-- Submit Button -->
                   <div>
-                     <input class="btn btn-primary btn-block form-content__submitbutton" type="submit" id='submit' value='Submit'> <input
-                        class="btn btn-success btn-block form-content__resetbutton" type='reset' value='Reset' />
+                     <button class="btn btn-primary btn-block form-content__submitbutton" type="submit" id='submit'>
+                        <i class="fas fa-paper-plane fa-sm"></i> Submit
+                     </button>
+                     <button class="btn btn-success btn-block form-content__resetbutton" type='reset'>
+                        <i class="fas fa-redo-alt fa-sm"></i> Reset
+                     </button>
                   </div>
                   <!-- End of Submit Button -->
                </form>
