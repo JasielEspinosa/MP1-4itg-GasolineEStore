@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -155,8 +157,12 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 				userDatas.setPaymentType(paymentType);
 
 				connection = (Connection) getServletContext().getAttribute("dbconn");
+				
+				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+				LocalDateTime getLocalTime = LocalDateTime.now();
 
-				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
+				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)";
 				try {
 					PreparedStatement pst = connection.prepareStatement(sql);
 					pst.setString(1, Security.encrypt(userDatas.getFirstName()));
@@ -169,6 +175,8 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 					pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
 					pst.setString(9, userDatas.getPaymentType());
 					pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
+					pst.setString(11, dateFormat.format(getLocalTime));
+					pst.setString(12, timeFormat.format(getLocalTime));
 					pst.executeUpdate();
 					System.out.println("Database connect result: " + "Pumasok ");
 				} catch (SQLException sqle) {

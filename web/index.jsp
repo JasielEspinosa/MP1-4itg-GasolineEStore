@@ -81,7 +81,7 @@
                      </div>
                   </div>
                   <div>
-                     <input class="col-md-12 form-content__input-field" type="number" maxlength="16" name="cardNumber" id="cardNumber"
+                     <input class="col-md-12 form-content__input-field" type="number" name="cardNumber" id="cardNumber" maxlength="16"
                         min="1000000000000000" max="9999999999999999" required="required" placeholder="Enter Credit Card Number">
                   </div>
                   <!-- Submit Button -->

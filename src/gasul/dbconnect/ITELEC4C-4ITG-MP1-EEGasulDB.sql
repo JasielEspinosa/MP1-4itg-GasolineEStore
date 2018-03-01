@@ -14,5 +14,7 @@ CREATE TABLE CustomerPurchaseTable (
 	TotalAmount varchar(500),
 	PaymentType varchar(300),
 	CardNumber varchar(500),
+	DateOrder varchar(500),
+	TimeOrder varchar(500),
 	PRIMARY KEY (CustomerID)
 );
