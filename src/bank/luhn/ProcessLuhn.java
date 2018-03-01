@@ -22,7 +22,7 @@ public class ProcessLuhn implements InvalidCreditCardNumberException {
 			boolean result = isCreditCardValid(cardNumber);
 			printMessage(result);
 			if (cardValid == true) {
-				cardNumber = maskNumber(cardNumber, "************####");
+				cardNumber = maskNumber(cardNumber, "##**********####");
 				userBean.setCardNumber(cardNumber);
 			} else if (cardValid == false) {
 				cardNumber = INVALID_CARD;

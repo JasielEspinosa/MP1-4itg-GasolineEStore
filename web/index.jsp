@@ -30,7 +30,8 @@
       </div>
       <!-- End of Header-->
       <!-- Form Container-->
-      <div class="col-sm-4 container align-items-center flex-column"> <!-- d-flex -->
+      <div class="col-sm-4 container align-items-center flex-column">
+         <!-- d-flex -->
          <div class="row">
             <div class="form-content col-md-12">
                <!-- Form -->
@@ -58,25 +59,25 @@
                   <div class="form-content__radiogroup">
                      <label>Payment CC Type</label>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" VISA" required="required">VISA</label>
+                        <label><input type="radio" name="paymentType" value="VISA" required="required"> VISA</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" MASTERCARD">MASTERCARD</label>
+                        <label><input type="radio" name="paymentType" value="MASTERCARD"> MASTERCARD</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" JCB">JCB</label>
+                        <label><input type="radio" name="paymentType" value="JCB"> JCB</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" AMEX">AMEX</label>
+                        <label><input type="radio" name="paymentType" value="AMEX"> AMEX</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" DINERS">DINERS</label>
+                        <label><input type="radio" name="paymentType" value="DINERS"> DINERS</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" GCASH">GCASH</label>
+                        <label><input type="radio" name="paymentType" value="GCASH"> GCASH</label>
                      </div>
                      <div>
-                        <label><input type="radio" name="paymentType" value=" PAY MAYA">PAY MAYA</label>
+                        <label><input type="radio" name="paymentType" value="PAY MAYA"> PAY MAYA</label>
                      </div>
                   </div>
                   <div>

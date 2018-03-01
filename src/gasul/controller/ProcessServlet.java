@@ -78,7 +78,8 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 		userDatas.setGasLiterPrice(gasLiterPrice);
 
 		if (ProcessLuhn.cardValid == false) {
-			System.out.println("Card Invalid");
+
+			System.out.println("Card Invalid due Card Number");
 
 			getServletContext().setAttribute("gasLiterPriceTrim", NO_PRICE_MSG_1);
 			getServletContext().setAttribute("purchaseAmountTrim", NO_PRICE_MSG_1);
@@ -91,92 +92,118 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 			getServletContext().setAttribute("tagalogTA", NO_PRICE_MSG_2);
 
 		} else if (ProcessLuhn.cardValid == true) {
-			System.out.println("Card Valid");
-			gasLiterPrice = userDatas.getGasLiterPrice();
-			String gasLiterPriceTrim = decipogi.format(gasLiterPrice);
 
-			purchaseAmount = userDatas.getLiters() * userDatas.getGasLiterPrice();
-			userDatas.setPurchaseAmount(purchaseAmount);
-			String purchaseAmountTrim = decipogi.format(purchaseAmount);
+			if (((paymentType.equals("VISA") || paymentType.equals("PAY MAYA")) && cardNumber.startsWith("4"))
+					|| (paymentType.equals("MASTERCARD") && cardNumber.startsWith("5"))
+					|| (paymentType.equals("JCB") && cardNumber.startsWith("35"))
+					|| (paymentType.equals("AMEX") && cardNumber.startsWith("37"))
+					|| (paymentType.equals("DINERS") && cardNumber.startsWith("3"))
+					|| (paymentType.equals("GCASH") && cardNumber.startsWith("6"))) {
 
-			vat = purchaseAmount * 0.12;
-			userDatas.setVat(vat);
-			String vatTrim = decipogi.format(vat);
+				System.out.println("Card Valid");
+				gasLiterPrice = userDatas.getGasLiterPrice();
+				String gasLiterPriceTrim = decipogi.format(gasLiterPrice);
 
-			totalAmount = purchaseAmount + userDatas.getVat();
-			userDatas.setTotalAmount(totalAmount);
-			String totalAmountTrim = decipogi.format(totalAmount);
+				purchaseAmount = userDatas.getLiters() * userDatas.getGasLiterPrice();
+				userDatas.setPurchaseAmount(purchaseAmount);
+				String purchaseAmountTrim = decipogi.format(purchaseAmount);
 
-			//Convert to Tagalog
+				vat = purchaseAmount * 0.12;
+				userDatas.setVat(vat);
+				String vatTrim = decipogi.format(vat);
 
-			int pisoGLP = (int) Math.floor(gasLiterPrice);
-			double centsGLP = gasLiterPrice - pisoGLP;
-			int sentimoGLP = (int) (100 * centsGLP + 0.5);
+				totalAmount = purchaseAmount + userDatas.getVat();
+				userDatas.setTotalAmount(totalAmount);
+				String totalAmountTrim = decipogi.format(totalAmount);
 
-			String pisoTagalogGLP = tagalog(pisoGLP, false);
-			String sentimoTagalogGLP = tagalog(sentimoGLP, false);
-			String tagalogOutputGLP = pisoTagalogGLP + ENDPISO + sentimoTagalogGLP + ENDSENTIMO;
-			String tagalogOutputTrimGLP = tagalogOutputGLP.substring(0, 1).toUpperCase() + tagalogOutputGLP.substring(1);
+				//Convert to Tagalog
 
-			int pisoPA = (int) Math.floor(purchaseAmount);
-			double centsPA = purchaseAmount - pisoPA;
-			int sentimoPA = (int) (100 * centsPA + 0.5);
-			String pisoTagalogPA = tagalog(pisoPA, false);
-			String sentimoTagalogPA = tagalog(sentimoPA, false);
-			String tagalogOutputPA = pisoTagalogPA + ENDPISO + sentimoTagalogPA + ENDSENTIMO;
-			String tagalogOutputTrimPA = tagalogOutputPA.substring(0, 1).toUpperCase() + tagalogOutputPA.substring(1);
+				int pisoGLP = (int) Math.floor(gasLiterPrice);
+				double centsGLP = gasLiterPrice - pisoGLP;
+				int sentimoGLP = (int) (100 * centsGLP + 0.5);
 
-			int pisoVAT = (int) Math.floor(vat);
-			double centsVAT = vat - pisoVAT;
-			int sentimoVAT = (int) (100 * centsVAT + 0.5);
-			String pisoTagalogVAT = tagalog(pisoVAT, false);
-			String sentimoTagalogVAT = tagalog(sentimoVAT, false);
-			String tagalogOutputVAT = pisoTagalogVAT + ENDPISO + sentimoTagalogVAT + ENDSENTIMO;
-			String tagalogOutputTrimVAT = tagalogOutputVAT.substring(0, 1).toUpperCase() + tagalogOutputVAT.substring(1);
+				String pisoTagalogGLP = tagalog(pisoGLP, false);
+				String sentimoTagalogGLP = tagalog(sentimoGLP, false);
+				String tagalogOutputGLP = pisoTagalogGLP + ENDPISO + sentimoTagalogGLP + ENDSENTIMO;
+				String tagalogOutputTrimGLP = tagalogOutputGLP.substring(0, 1).toUpperCase() + tagalogOutputGLP.substring(1);
 
-			int pisoTA = (int) Math.floor(totalAmount);
-			double centsTA = totalAmount - pisoTA;
-			int sentimoTA = (int) (100 * centsTA + 0.5);
+				int pisoPA = (int) Math.floor(purchaseAmount);
+				double centsPA = purchaseAmount - pisoPA;
+				int sentimoPA = (int) (100 * centsPA + 0.5);
+				String pisoTagalogPA = tagalog(pisoPA, false);
+				String sentimoTagalogPA = tagalog(sentimoPA, false);
+				String tagalogOutputPA = pisoTagalogPA + ENDPISO + sentimoTagalogPA + ENDSENTIMO;
+				String tagalogOutputTrimPA = tagalogOutputPA.substring(0, 1).toUpperCase() + tagalogOutputPA.substring(1);
 
-			String pisoTagalogTA = tagalog(pisoTA, false);
-			String sentimoTagalogTA = tagalog(sentimoTA, false);
-			String tagalogOutputTA = pisoTagalogTA + ENDPISO + sentimoTagalogTA + ENDSENTIMO;
-			String tagalogOutputTrimTA = tagalogOutputTA.substring(0, 1).toUpperCase() + tagalogOutputTA.substring(1);
+				int pisoVAT = (int) Math.floor(vat);
+				double centsVAT = vat - pisoVAT;
+				int sentimoVAT = (int) (100 * centsVAT + 0.5);
+				String pisoTagalogVAT = tagalog(pisoVAT, false);
+				String sentimoTagalogVAT = tagalog(sentimoVAT, false);
+				String tagalogOutputVAT = pisoTagalogVAT + ENDPISO + sentimoTagalogVAT + ENDSENTIMO;
+				String tagalogOutputTrimVAT = tagalogOutputVAT.substring(0, 1).toUpperCase() + tagalogOutputVAT.substring(1);
 
-			userDatas.setPaymentType(paymentType);
+				int pisoTA = (int) Math.floor(totalAmount);
+				double centsTA = totalAmount - pisoTA;
+				int sentimoTA = (int) (100 * centsTA + 0.5);
 
-			connection = (Connection) getServletContext().getAttribute("dbconn");
+				String pisoTagalogTA = tagalog(pisoTA, false);
+				String sentimoTagalogTA = tagalog(sentimoTA, false);
+				String tagalogOutputTA = pisoTagalogTA + ENDPISO + sentimoTagalogTA + ENDSENTIMO;
+				String tagalogOutputTrimTA = tagalogOutputTA.substring(0, 1).toUpperCase() + tagalogOutputTA.substring(1);
 
-			String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
-			try {
-				PreparedStatement pst = connection.prepareStatement(sql);
-				pst.setString(1, Security.encrypt(userDatas.getFirstName()));
-				pst.setString(2, Security.encrypt(userDatas.getLastName()));
-				pst.setString(3, userDatas.getGasul());
-				pst.setDouble(4, userDatas.getLiters());
-				pst.setDouble(5, userDatas.getGasLiterPrice());
-				pst.setString(6, Security.encrypt(Double.toString(userDatas.getPurchaseAmount())));
-				pst.setString(7, Security.encrypt(Double.toString(userDatas.getVat())));
-				pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
-				pst.setString(9, userDatas.getPaymentType());
-				pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
-				pst.executeUpdate();
-				System.out.println("Database connect result: " + "Pumasok ");
-			} catch (SQLException sqle) {
-				System.err.println("Database connect result: " + sqle.getMessage());
-			} catch (Exception exp) {
-				System.err.println("Database connect result: " + exp.getMessage());
+				userDatas.setPaymentType(paymentType);
+
+				connection = (Connection) getServletContext().getAttribute("dbconn");
+
+				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
+				try {
+					PreparedStatement pst = connection.prepareStatement(sql);
+					pst.setString(1, Security.encrypt(userDatas.getFirstName()));
+					pst.setString(2, Security.encrypt(userDatas.getLastName()));
+					pst.setString(3, userDatas.getGasul());
+					pst.setDouble(4, userDatas.getLiters());
+					pst.setDouble(5, userDatas.getGasLiterPrice());
+					pst.setString(6, Security.encrypt(Double.toString(userDatas.getPurchaseAmount())));
+					pst.setString(7, Security.encrypt(Double.toString(userDatas.getVat())));
+					pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
+					pst.setString(9, userDatas.getPaymentType());
+					pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
+					pst.executeUpdate();
+					System.out.println("Database connect result: " + "Pumasok ");
+				} catch (SQLException sqle) {
+					System.err.println("Database connect result: " + sqle.getMessage());
+				} catch (Exception exp) {
+					System.err.println("Database connect result: " + exp.getMessage());
+				}
+
+				getServletContext().setAttribute("gasLiterPriceTrim", "P" + gasLiterPriceTrim);
+				getServletContext().setAttribute("purchaseAmountTrim", "P" + purchaseAmountTrim);
+				getServletContext().setAttribute("vatTrim", "P" + vatTrim);
+				getServletContext().setAttribute("totalAmountTrim", "P" + totalAmountTrim);
+
+				getServletContext().setAttribute("tagalogGLP", tagalogOutputTrimGLP);
+				getServletContext().setAttribute("tagalogPA", tagalogOutputTrimPA);
+				getServletContext().setAttribute("tagalogVAT", tagalogOutputTrimVAT);
+				getServletContext().setAttribute("tagalogTA", tagalogOutputTrimTA + " :)");
+
+			} else {
+
+				System.out.println("Card Invalid due Bank Company");
+
+				userDatas.setPaymentType("Your card number is not a " + paymentType);
+
+				getServletContext().setAttribute("gasLiterPriceTrim", NO_PRICE_MSG_1);
+				getServletContext().setAttribute("purchaseAmountTrim", NO_PRICE_MSG_1);
+				getServletContext().setAttribute("vatTrim", NO_PRICE_MSG_1);
+				getServletContext().setAttribute("totalAmountTrim", NO_PRICE_MSG_1);
+
+				getServletContext().setAttribute("tagalogGLP", NO_PRICE_MSG_2);
+				getServletContext().setAttribute("tagalogPA", NO_PRICE_MSG_2);
+				getServletContext().setAttribute("tagalogVAT", NO_PRICE_MSG_2);
+				getServletContext().setAttribute("tagalogTA", NO_PRICE_MSG_2);
+
 			}
-
-			getServletContext().setAttribute("gasLiterPriceTrim", "P" + gasLiterPriceTrim);
-			getServletContext().setAttribute("purchaseAmountTrim", "P" + purchaseAmountTrim);
-			getServletContext().setAttribute("vatTrim", "P" + vatTrim);
-			getServletContext().setAttribute("totalAmountTrim", "P" + totalAmountTrim);
-
-			getServletContext().setAttribute("tagalogGLP", tagalogOutputTrimGLP);
-			getServletContext().setAttribute("tagalogPA", tagalogOutputTrimPA);
-			getServletContext().setAttribute("tagalogVAT", tagalogOutputTrimVAT);
-			getServletContext().setAttribute("tagalogTA", tagalogOutputTrimTA + " :)");
 
 		}
 
