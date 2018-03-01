@@ -30,7 +30,7 @@
       </div>
       <!-- End of Header-->
       <!-- Form Container-->
-      <div class="d-flex align-items-center flex-column">
+      <div class="col-sm-5 container align-items-center flex-column"><!-- d-flex -->
          <div class="row">
             <div class="form-content-output col-md-12">
                <div>

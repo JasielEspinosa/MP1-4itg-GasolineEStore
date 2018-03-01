@@ -3,190 +3,183 @@
 /* Import Fonts */
 /* Josefin Slab - Latin */
 @font-face {
-	font-family: 'Josefin Slab';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Josefin Slab Regular'), local('JosefinSlab-Regular'),
-		url(http://fonts.gstatic.com/s/josefinslab/v8/lW-5wjwOK3Ps5GSJlNNkMalnqg6v.woff2)
-		format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-		U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
-		U+2212, U+2215, U+FEFF, U+FFFD;
+   font-family: 'Josefin Slab';
+   font-style: normal;
+   font-weight: 400;
+   src: local('Josefin Slab Regular'), local('JosefinSlab-Regular'),
+      url(http://fonts.gstatic.com/s/josefinslab/v8/lW-5wjwOK3Ps5GSJlNNkMalnqg6v.woff2) format('woff2');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+      U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* Lato */
 @font-face {
-	font-family: 'Lato';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Lato Regular'), local('Lato-Regular'),
-		url(http://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjxAwXjeu.woff2)
-		format('woff2');
-	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
-		U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+   font-family: 'Lato';
+   font-style: normal;
+   font-weight: 400;
+   src: local('Lato Regular'), local('Lato-Regular'), url(http://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjxAwXjeu.woff2) format('woff2');
+   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 @font-face {
-	font-family: 'Lato';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Lato Regular'), local('Lato-Regular'),
-		url(http://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wXg.woff2)
-		format('woff2');
-	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-		U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
-		U+2212, U+2215, U+FEFF, U+FFFD;
+   font-family: 'Lato';
+   font-style: normal;
+   font-weight: 400;
+   src: local('Lato Regular'), local('Lato-Regular'), url(http://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+      U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* End */
 
 /* Body CSS*/
 body {
-	background-image: url("../images/lukeaztec.gif");
-	font-family: Lato;
-	width: 100%
+   background-image: url("../images/lukeaztec.gif");
+   font-family: Lato;
+   width: 100%
 }
 
 #page {
-	display: none;
+   display: none;
 }
 
 #loading {
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 100;
-	width: 100vw;
-	height: 100vh;
-	background-color: #FFF;
-	background-image: url("../images/triangles.gif");
-	background-repeat: no-repeat;
-	background-position: center;
+   display: block;
+   position: absolute;
+   top: 0;
+   left: 0;
+   z-index: 100;
+   width: 100vw;
+   height: 100vh;
+   background-color: #FFF;
+   background-image: url("../images/triangles.gif");
+   background-repeat: no-repeat;
+   background-position: center;
 }
 /* End of Body CSS*/
 
 /* Header CSS */
 /* Background Color */
 .header {
-	background-color: #254117;
-	color: #FFF;
-	height: 125px;
-	text-align: center;
-	font-family: Josefin Slab;
+   background-color: #254117;
+   color: #FFF;
+   height: 125px;
+   text-align: center;
+   font-family: Josefin Slab;
 }
 
 .header__title {
-	padding-top: 40px;
+   padding-top: 40px;
+   margin-left: 30px;
 }
 
 .header__logo {
-	height: 125px;
-	width: 125px;
+   height: 125px;
+   width: 125px;
 }
 
 @media ( max-width : 576px) {
-	.header__title {
-		display: none;
-	}
-	.img {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.header__firstcolumn {
-		display: none;
-	}
+   .header__title {
+      display: none;
+   }
+   .img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+   }
+   .header__firstcolumn {
+      display: none;
+   }
 }
 
 @media ( max-width : 768px) {
-	.header__title {
-		display: none;
-	}
-	.img {
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.header__firstcolumn {
-		display: none;
-	}
+   .header__title {
+      display: none;
+   }
+   .img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+   }
+   .header__firstcolumn {
+      display: none;
+   }
 }
 /* End of Header CSS*/
 
 /* Form Content CSS */
 .form-content {
-	background-color: #254117;
-	margin-top: 20px;
-	padding: 20px;
-	color: #FFF;
+   background-color: #254117;
+   margin-top: 20px;
+   padding: 20px;
+   color: #FFF;
 }
 
 .form-content__input-field {
-	border-color: transparent;
-	background-color: #f8f8f8;
-	color: #000;
-	border-radius: 5px;
-	margin: 5px 0px;
-	outline: none !important;
+   border-color: transparent;
+   background-color: #f8f8f8;
+   color: #000;
+   border-radius: 5px;
+   margin: 5px 0px;
+   outline: none !important;
 }
 
 .form-content__submitbutton {
-	margin-top: 5px;
-	border: none !important;
-	outline: none !important;
-	box-shadow: none !important;
+   margin-top: 5px;
+   border: none !important;
+   outline: none !important;
+   box-shadow: none !important;
 }
 
 .form-content__resetbutton {
-	margin-top: 5px;
-	border: none !important;
-	outline: none !important;
-	box-shadow: none !important;
+   margin-top: 5px;
+   border: none !important;
+   outline: none !important;
+   box-shadow: none !important;
 }
 
 .form-content__radiogroup {
-	text-align: center;
+   text-align: center;
 }
 
 .form-content__dropdown {
-	text-align: center;
-	margin-top: 10px;
+   text-align: center;
+   margin-top: 10px;
 }
 
 select {
-	cursor: pointer;
+   cursor: pointer;
 }
 
 input[type="radio"] {
-	margin-right: 5px;
-	cursor: pointer;
+   margin-right: 5px;
+   cursor: pointer;
 }
 /* End*/
 
 /* Output.jsp CSS */
 .form-content_labelcolor {
-	color: #FFCE00;
+   color: #FFCE00;
 }
 
 .form-content-output {
-	/* max-width: 350px; */
-	padding: 20px 20px 0px 20px;
-	background-color: #254117;
-	color: #FFF;
-	margin-top: 20px;
+   /* max-width: 350px; */
+   padding: 20px 20px 0px 20px;
+   background-color: #254117;
+   color: #FFF;
+   margin-top: 30px;
 }
 
 .form-content__lowerlabelsspacing {
-	margin-bottom: 10px;
+   margin-bottom: 10px;
 }
 
 .form-content__description {
-	text-align: justify;
+   text-align: justify;
 }
 
 .form-content__returnbutton {
-	border: none !important;
-	outline: none !important;
-	box-shadow: none !important;
+   border: none !important;
+   outline: none !important;
+   box-shadow: none !important;
 }
 /* End of Output.jsp CSS */
 
