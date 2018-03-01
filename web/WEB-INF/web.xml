@@ -2,7 +2,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 	<display-name>MP1-4itg-GasolineEStore</display-name>
-
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>index.html</welcome-file>
@@ -11,27 +10,23 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-
 	<context-param>
 		<param-name>jdbcDriver</param-name>
 		<param-value>com.mysql.jdbc.Driver</param-value>
 	</context-param>
-
 	<context-param>
 		<param-name>jdbcURL</param-name>
 		<param-value>ZObe4rdvMhFMUtf3CC/+QxhqHCQY7m7gkwva1dgmkyfGMI9YWBFSAc/GuHKVAxVIHgD3hV9fKOVmM9NcaX0wlA==</param-value>
 	</context-param>
-
 	<context-param>
 		<param-name>dbUserName</param-name>
 		<param-value>NyiG//i7loPFfdUoO9BFuA==</param-value>
 	</context-param>
-
 	<context-param>
 		<param-name>dbPassword</param-name>
 		<param-value>719bTBvphWewRiCiCj3D/A==</param-value>
 	</context-param>
-
+	
 	<servlet>
 		<servlet-name>ProcessServlet</servlet-name>
 		<servlet-class>gasul.controller.ProcessServlet</servlet-class>
@@ -41,10 +36,19 @@
 		<url-pattern>/gasulgaming.proc</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AuditTrailServlet</servlet-name>
+		<servlet-class>gasul.controller.AuditTrailServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AuditTrailServlet</servlet-name>
+		<url-pattern>/audittrail.proc</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>gasul.dbconnect.DatabaseUserServletContextAttributeListener</listener-class>
 	</listener>
-
 	<error-page>
 		<error-code>500</error-code>
 		<location>/error.jsp</location>
@@ -57,6 +61,4 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/error.jsp</location>
 	</error-page>
-
-
 </web-app>

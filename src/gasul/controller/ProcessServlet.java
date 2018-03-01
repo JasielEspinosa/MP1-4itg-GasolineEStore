@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,7 @@ import gasul.model.UserBean;
 
 import gasul.dbconnect.Security;
 
-@WebServlet("")
+/*@WebServlet("")*/
 public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumberException, OtherMessages {
 	private static final long serialVersionUID = 1L;
 
@@ -157,9 +156,9 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 				userDatas.setPaymentType(paymentType);
 
 				connection = (Connection) getServletContext().getAttribute("dbconn");
-				
+
 				DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-				DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+				DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss a");
 				LocalDateTime getLocalTime = LocalDateTime.now();
 
 				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -175,8 +174,8 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 					pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
 					pst.setString(9, userDatas.getPaymentType());
 					pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
-					pst.setString(11, dateFormat.format(getLocalTime));
-					pst.setString(12, timeFormat.format(getLocalTime));
+					pst.setString(11, Security.encrypt(dateFormat.format(getLocalTime)));
+					pst.setString(12, Security.encrypt(timeFormat.format(getLocalTime)));
 					pst.executeUpdate();
 					System.out.println("Database connect result: " + "Pumasok ");
 				} catch (SQLException sqle) {

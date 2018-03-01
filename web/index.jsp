@@ -96,6 +96,11 @@
                   <!-- End of Submit Button -->
                </form>
                <!-- End of Form -->
+               <form action='audittrail.proc' method=post>
+                  <button class="btn btn-primary btn-block form-content__submitbutton" type="submit" id='auditTrailButton'>
+                     <i class="fas fa-paper-plane fa-sm"></i> Audit Trail
+                  </button>
+               </form>
             </div>
          </div>
       </div>

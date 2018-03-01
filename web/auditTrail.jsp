@@ -1,3 +1,9 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="gasul.dbconnect.DatabaseServletContextListener"%>
+<%@page import="gasul.dbconnect.Security"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html">
 <html>
 <head>
@@ -7,20 +13,17 @@
 <!-- Website Logo -->
 <link rel="icon" href="images/mp1logotransparent.png">
 <!-- CSS -->
-<link rel="stylesheet" href="css/open-sans.css">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="css/audittrail-style.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/navbar.css">
-<link rel="stylesheet" href="css/sidebar.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/pure-min.css">
-<link rel="stylesheet" href="css/grids-responsive-min.css">
+<link rel="stylesheet" href="css/main.css">
 <!-- Bootstrap CSS - CDN Link 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 -->
 <title>Gasoline eStore Audit Trail Page - Eslabon Espinosa</title>
-<script src="js/genaudrep.js"></script>
-<script src="js/fontawesome-all.js"></script>
+<script src="js/jquery-1.12.4.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/customers.js"></script>
 <script src="dataTables/datatables.min.js"></script>
 </head>
 <body>
@@ -39,53 +42,51 @@
       </div>
       <!-- End of Header-->
       <!-- Form Container-->
-      <div class="col-sm-5 container align-items-center flex-column">
+      <div class="col-sm-8 container align-items-center flex-column">
          <!-- d-flex -->
          <div class="row">
-            <div class="form-content-output col-md-12 ">
+            <div class="form-content-audit col-md-12 ">
                <div>
-                  <table id="customers" class="dataTable display">
+                  <table id="customers" class="display">
                      <thead>
                         <tr>
-                           <th>ACTION</th>
-                           <th>PERFORMED ON</th>
-                           <th>PERFORMED BY</th>
-                           <th>EVENT DATE</th>
+                           <th>NAME</th>
+                           <th>GAS TYPE</th>
+                           <th>TOTAL PURCHASED AMOUNT</th>
+                           <th>ORDER DATE</th>
+                           <th>ORDER TIME</th>
                         </tr>
                      </thead>
-                     <tfoot>
-                        <tr>
-                           <th>ACTION</th>
-                           <th>PERFORMED ON</th>
-                           <th>PERFORMED BY</th>
-                           <th>EVENT DATE</th>
-                        </tr>
-                     </tfoot>
                      <tbody>
+                        <%
+                        	try {
+                        		Connection conn = (Connection) getServletContext().getAttribute("dbconn");
+                        		String sql = "SELECT * FROM CustomerPurchaseTable"; /*WHERE CustomerID = ?";*/
+                        		PreparedStatement pst = conn.prepareStatement(sql);
+                        		ResultSet rs = pst.executeQuery();
+
+                        		while (rs.next()) {
+                        %>
                         <tr>
-                           <td>Tiger Nixon</td>
-                           <td>System Architect</td>
-                           <td>Edinburgh</td>
-                           <td>61</td>
+                           <td><%=Security.decrypt(rs.getString("FirstName"))%> <%=Security.decrypt(rs.getString("LastName"))%></td>
+                           <td><%=rs.getString("Gasul")%></td>
+                           <td><%=Security.decrypt(rs.getString("TotalAmount"))%></td>
+                           <td><%=Security.decrypt(rs.getString("OrderDate"))%></td>
+                           <td><%=Security.decrypt(rs.getString("OrderTime"))%></td>
                         </tr>
-                        <tr>
-                           <td>Garrett Winters</td>
-                           <td>Accountant</td>
-                           <td>Tokyo</td>
-                           <td>63</td>
-                        </tr>
-                        <tr>
-                           <td>Ashton Cox</td>
-                           <td>Junior Technical Author</td>
-                           <td>San Francisco</td>
-                           <td>66</td>
-                        </tr>
-                        <tr>
-                           <td>Cedric Kelly</td>
-                           <td>Senior Javascript Developer</td>
-                           <td>Edinburgh</td>
-                           <td>22</td>
-                        </tr>
+                        <%
+                        	}
+                        	} catch (Exception exp) {
+                        		response.sendRedirect("error.jsp");
+                        	}
+                        %>
+                        <!--                         <tr>
+                           <td>Code20</td>
+                           <td>Premium</td>
+                           <td>P26.13</td>
+                           <td>2018/02/03</td>
+                           <td>11:00 AM</td>
+                        </tr> -->
                      </tbody>
                   </table>
                </div>
