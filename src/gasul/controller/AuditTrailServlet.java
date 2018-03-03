@@ -1,12 +1,6 @@
 package gasul.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,16 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import gasul.dbconnect.Security;
-import gasul.model.*;
-
 /*@WebServlet("")*/
 public class AuditTrailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	private static Connection connection;
-
-	private static ResultSet rs;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);

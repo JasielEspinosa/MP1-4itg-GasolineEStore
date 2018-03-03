@@ -1,9 +1,9 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="gasul.dbconnect.DatabaseServletContextListener"%>
 <%@page import="gasul.dbconnect.Security"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html">
 <html>
 <head>
@@ -46,50 +46,48 @@
          <!-- d-flex -->
          <div class="row">
             <div class="form-content-audit col-md-12 ">
-               <div>
-                  <table id="customers" class="display">
-                     <thead>
-                        <tr>
-                           <th>NAME</th>
-                           <th>GAS TYPE</th>
-                           <th>TOTAL PURCHASED AMOUNT</th>
-                           <th>ORDER DATE</th>
-                           <th>ORDER TIME</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <%
-                        	try {
-                        		Connection conn = (Connection) getServletContext().getAttribute("dbconn");
-                        		String sql = "SELECT * FROM CustomerPurchaseTable"; /*WHERE CustomerID = ?";*/
-                        		PreparedStatement pst = conn.prepareStatement(sql);
-                        		ResultSet rs = pst.executeQuery();
+               <table id="customers" class="display">
+                  <thead>
+                     <tr>
+                        <th>NAME</th>
+                        <th>GAS TYPE</th>
+                        <th>TOTAL PURCHASED AMOUNT</th>
+                        <th>ORDER DATE</th>
+                        <th>ORDER TIME</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <%
+                     	try {
+                     		Connection conn = (Connection) getServletContext().getAttribute("dbconn");
+                     		String sql = "SELECT * FROM CustomerPurchaseTable"; /*WHERE CustomerID = ?";*/
+                     		PreparedStatement pst = conn.prepareStatement(sql);
+                     		ResultSet rs = pst.executeQuery();
 
-                        		while (rs.next()) {
-                        %>
-                        <tr>
-                           <td><%=Security.decrypt(rs.getString("FirstName"))%> <%=Security.decrypt(rs.getString("LastName"))%></td>
-                           <td><%=rs.getString("Gasul")%></td>
-                           <td><%=Security.decrypt(rs.getString("TotalAmount"))%></td>
-                           <td><%=Security.decrypt(rs.getString("OrderDate"))%></td>
-                           <td><%=Security.decrypt(rs.getString("OrderTime"))%></td>
-                        </tr>
-                        <%
-                        	}
-                        	} catch (Exception exp) {
-                        		response.sendRedirect("error.jsp");
-                        	}
-                        %>
-                        <!--                         <tr>
+                     		while (rs.next()) {
+                     %>
+                     <tr>
+                        <td><%=Security.decrypt(rs.getString("FirstName"))%> <%=Security.decrypt(rs.getString("LastName"))%></td>
+                        <td><%=rs.getString("Gasul")%></td>
+                        <td>P<%=Security.decrypt(rs.getString("TotalAmount"))%></td>
+                        <td><%=Security.decrypt(rs.getString("OrderDate"))%></td>
+                        <td><%=Security.decrypt(rs.getString("OrderTime"))%></td>
+                     </tr>
+                     <%
+                     	}
+                     	} catch (Exception exp) {
+                     		response.sendRedirect("error.jsp");
+                     	}
+                     %>
+                     <!--                         <tr>
                            <td>Code20</td>
                            <td>Premium</td>
                            <td>P26.13</td>
                            <td>2018/02/03</td>
                            <td>11:00 AM</td>
                         </tr> -->
-                     </tbody>
-                  </table>
-               </div>
+                  </tbody>
+               </table>
                <!-- Back Button -->
                <br />
                <div>
