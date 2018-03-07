@@ -52,6 +52,8 @@
                         <th>NAME</th>
                         <th>GAS TYPE</th>
                         <th>TOTAL PURCHASED AMOUNT</th>
+                        <th>PAYMENT TYPE</th>
+                        <th>CARD NUMBER</th>
                         <th>ORDER DATE</th>
                         <th>ORDER TIME</th>
                      </tr>
@@ -70,6 +72,8 @@
                         <td><%=Security.decrypt(rs.getString("FirstName"))%> <%=Security.decrypt(rs.getString("LastName"))%></td>
                         <td><%=rs.getString("Gasul")%></td>
                         <td>P<%=Security.decrypt(rs.getString("TotalAmount"))%></td>
+                        <td><%=rs.getString("PaymentType")%></td>
+                        <td><%=Security.decrypt(rs.getString("CardNumber"))%></td>
                         <td><%=Security.decrypt(rs.getString("OrderDate"))%></td>
                         <td><%=Security.decrypt(rs.getString("OrderTime"))%></td>
                      </tr>

@@ -46,14 +46,14 @@
                   </div>
                   <div class="form-content__dropdown">
                      <label>Enter Gasoline Type </label> <select name="gasolineType" required="required">
-                        <!--  <option selected="selected" disabled="disabled">Select Gasul Type</option> -->
+                        <option value="" selected="selected" disabled="disabled">Select Gasul Type</option>
                         <option value="Unleaded">Unleaded</option>
                         <option value="Diesel">Diesel</option>
                         <option value="Premium">Premium</option>
                      </select>
                   </div>
                   <div>
-                     <input class="col-md-12 form-content__input-field" type="number" name="liters" id="liters" step=".001" min="1"
+                     <input class="col-md-12 form-content__input-field" type="number" name="liters" id="liters" step=".001" min=".001"
                         required="required" placeholder="Enter Number Of Liters">
                   </div>
                   <div class="form-content__radiogroup">
@@ -79,12 +79,16 @@
                      <div>
                         <label><input type="radio" name="paymentType" value="PAY MAYA"> PAY MAYA</label>
                      </div>
+                     <div>
+                        <label><input type="radio" name="paymentType" value="BPI"> BPI</label>
+                     </div>
                   </div>
                   <div>
                      <input class="col-md-12 form-content__input-field" type="number" name="cardNumber" id="cardNumber" maxlength="16"
                         min="1000000000000000" max="9999999999999999" required="required" placeholder="Enter Credit Card Number">
                   </div>
                   <!-- Submit Button -->
+                  <br />
                   <div>
                      <button class="btn btn-primary btn-block form-content__submitbutton" type="submit" id='submit'>
                         <i class="fas fa-paper-plane fa-sm"></i> Submit
@@ -97,9 +101,12 @@
                </form>
                <!-- End of Form -->
                <form action='audittrail.proc' method=post>
-                  <button class="btn btn-primary btn-block form-content__submitbutton" type="submit" id='auditTrailButton'>
-                     <i class="fas fa-paper-plane fa-sm"></i> Audit Trail
-                  </button>
+                  <br />
+                  <div>
+                     <button class="btn btn-warning btn-block form-content__submitbutton" type="submit" id='auditTrailButton'>
+                        <i class="fas fa-paper-plane fa-sm"></i> Audit Trail
+                     </button>
+                  </div>
                </form>
             </div>
          </div>

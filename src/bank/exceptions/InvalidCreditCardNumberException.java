@@ -4,8 +4,7 @@ public interface InvalidCreditCardNumberException {
 
 	String VALID_CARD = "Your credit card submitted is VALID.";
 	String INVALID_CARD = "Unauthorized use! Your input of card number is INVALID. "
-			+ "<br/>For an invalid card reading, your order will not be calculated nor purchased, "
-			+ "<br/>datas will not be injected to the database.";
+			+ "<br/>For an invalid card reading, your order will not be calculated nor purchased, datas will not be injected to the database.";
 
 	String NON_DIGIT_INPUT = "   Input invalid. Please enter digits only. ";
 

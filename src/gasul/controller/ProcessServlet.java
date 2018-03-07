@@ -37,8 +37,9 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
+		String firstName = request.getParameter("firstName").toUpperCase();
+		String lastName = request.getParameter("lastName").toUpperCase();
+		
 		String gasul = request.getParameter("gasolineType");
 		double liters = Double.parseDouble(request.getParameter("liters"));
 		String paymentType = request.getParameter("paymentType");
@@ -95,7 +96,7 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 		} else if (ProcessLuhn.cardValid == true) {
 
 			if (((paymentType.equals("VISA") || paymentType.equals("PAY MAYA")) && cardNumber.startsWith("4"))
-					|| (paymentType.equals("MASTERCARD") && cardNumber.startsWith("5"))
+					|| ((paymentType.equals("MASTERCARD") || paymentType.equals("BPI")) && cardNumber.startsWith("5"))
 					|| (paymentType.equals("JCB") && cardNumber.startsWith("35"))
 					|| (paymentType.equals("AMEX") && cardNumber.startsWith("37"))
 					|| (paymentType.equals("DINERS") && cardNumber.startsWith("3"))
