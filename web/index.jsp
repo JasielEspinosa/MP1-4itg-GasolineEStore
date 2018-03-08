@@ -24,7 +24,7 @@
             <img src="images/mp1logotransparent.png" class="header__logo">
          </div>
          <div class="col-sm-3 header__title">
-            <h1>Gasoline eStore</h1>
+            <h2>Gasoline eStore</h2>
          </div>
          <div class="col-sm-2"></div>
       </div>

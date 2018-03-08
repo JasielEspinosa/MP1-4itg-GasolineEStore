@@ -39,7 +39,7 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 
 		String firstName = request.getParameter("firstName").toUpperCase();
 		String lastName = request.getParameter("lastName").toUpperCase();
-		
+
 		String gasul = request.getParameter("gasolineType");
 		double liters = Double.parseDouble(request.getParameter("liters"));
 		String paymentType = request.getParameter("paymentType");
@@ -162,7 +162,7 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 				DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm:ss a");
 				LocalDateTime getLocalTime = LocalDateTime.now();
 
-				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?,?,?)";
+				String sql = "INSERT INTO CustomerPurchaseTable VALUES (NULL, ?,?,?,?,?,?,?,?,?,?)";
 				try {
 					PreparedStatement pst = connection.prepareStatement(sql);
 					pst.setString(1, Security.encrypt(userDatas.getFirstName()));
@@ -175,10 +175,27 @@ public class ProcessServlet extends HttpServlet implements InvalidCreditCardNumb
 					pst.setString(8, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
 					pst.setString(9, userDatas.getPaymentType());
 					pst.setString(10, Security.encrypt(cardNumberData.getCardNumber()));
-					pst.setString(11, Security.encrypt(dateFormat.format(getLocalTime)));
-					pst.setString(12, Security.encrypt(timeFormat.format(getLocalTime)));
 					pst.executeUpdate();
-					System.out.println("Database connect result: " + "Pumasok ");
+					System.out.println("Database connect result: " + "Pumasok sa Cust Table");
+				} catch (SQLException sqle) {
+					System.err.println("Database connect result: " + sqle.getMessage());
+				} catch (Exception exp) {
+					System.err.println("Database connect result: " + exp.getMessage());
+				}
+
+				String sql_audit = "INSERT INTO AuditLogTable VALUES (NULL, ?,?,?,?,?,?,?,?)";
+				try {
+					PreparedStatement pst = connection.prepareStatement(sql_audit);
+					pst.setString(1, Security.encrypt(userDatas.getFirstName()));
+					pst.setString(2, Security.encrypt(userDatas.getLastName()));
+					pst.setString(3, userDatas.getGasul());
+					pst.setString(4, Security.encrypt(Double.toString(userDatas.getTotalAmount())));
+					pst.setString(5, userDatas.getPaymentType());
+					pst.setString(6, Security.encrypt(cardNumberData.getCardNumber()));
+					pst.setString(7, Security.encrypt(dateFormat.format(getLocalTime)));
+					pst.setString(8, Security.encrypt(timeFormat.format(getLocalTime)));
+					pst.executeUpdate();
+					System.out.println("Database connect result: " + "Pumasok sa Audit");
 				} catch (SQLException sqle) {
 					System.err.println("Database connect result: " + sqle.getMessage());
 				} catch (Exception exp) {

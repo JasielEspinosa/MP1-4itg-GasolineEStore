@@ -36,7 +36,7 @@
             <img src="images/mp1logotransparent.png" class="header__logo">
          </div>
          <div class="col-sm-3 header__title">
-            <h1>Gasoline eStore</h1>
+            <h2>Gasoline eStore</h2>
          </div>
          <div class="col-sm-2"></div>
       </div>
@@ -46,7 +46,7 @@
          <!-- d-flex -->
          <div class="row">
             <div class="form-content-audit col-md-12 ">
-               <table id="customers" class="display">
+               <table style="width: 100%;" id="customers" class="display">
                   <thead>
                      <tr>
                         <th>NAME</th>
@@ -62,7 +62,7 @@
                      <%
                      	try {
                      		Connection conn = (Connection) getServletContext().getAttribute("dbconn");
-                     		String sql = "SELECT * FROM CustomerPurchaseTable"; /*WHERE CustomerID = ?";*/
+                     		String sql = "SELECT * FROM AuditLogTable"; /*WHERE CustomerID = ?";*/
                      		PreparedStatement pst = conn.prepareStatement(sql);
                      		ResultSet rs = pst.executeQuery();
 

@@ -14,7 +14,18 @@ CREATE TABLE CustomerPurchaseTable (
 	TotalAmount varchar(500),
 	PaymentType varchar(300),
 	CardNumber varchar(500),
+	PRIMARY KEY (CustomerID)
+);
+
+CREATE TABLE AuditLogTable (
+	AuditLogID int NOT NULL AUTO_INCREMENT,
+	FirstName varchar(300),
+	LastName varchar(300),
+	Gasul varchar(300),
+	TotalAmount varchar(500),
+	PaymentType varchar(300),
+	CardNumber varchar(500),
 	OrderDate varchar(500),
 	OrderTime varchar(500),
-	PRIMARY KEY (CustomerID)
+	PRIMARY KEY (AuditLogID)
 );

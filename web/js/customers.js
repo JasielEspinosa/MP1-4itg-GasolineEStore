@@ -1,3 +1,5 @@
 $(document).ready(function() {
-    $('#customers').DataTable();
-} );
+	$('#customers').DataTable({
+		responsive : true
+	});
+});
